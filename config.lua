@@ -25,8 +25,7 @@ config.window_padding = {
 config.background = {
 	{
 		source = {
-            -- File = "/Users/dayobbadru/Pictures/ravens.jpg" .. os.getenv("USER") .. "/.config/wezterm/dark-desert.jpg",
-            File = "/Users/" .. os.getenv("USER") .. "/Pictures/ravens.jpg",
+			File = "/Users/" .. os.getenv("USER") .. "/Pictures/ravens.jpg",
 		},
 		hsb = {
 			hue = 1.0,
