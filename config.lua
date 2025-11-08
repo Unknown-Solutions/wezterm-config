@@ -2,9 +2,10 @@ local wezterm = require("wezterm")
 local config = {}
 
 if wezterm.config_builder then
-	config = wezterm.config_builder()
+  config = wezterm.config_builder()
 end
 
+-- General settings
 config.default_cursor_style = "SteadyBar"
 config.automatically_reload_config = true
 config.window_close_confirmation = "NeverPrompt"
@@ -17,73 +18,67 @@ config.font_size = 12.5
 config.font = wezterm.font("JetBrains Mono", { weight = "Bold" })
 config.enable_tab_bar = false
 config.window_padding = {
-	left = 7,
-	right = 0,
-	top = 2,
-	bottom = 0,
+  left = 7,
+  right = 0,
+  top = 2,
+  bottom = 0,
 }
+
+-- Background image and transparency
 config.background = {
-	{
-		source = {
-			File = "/Users/" .. os.getenv("USER") .. "/Pictures/ravens.jpg",
-		},
-		hsb = {
-			hue = 1.0,
-			saturation = 1.02,
-			brightness = 0.25,
-		},
-		-- attachment = { Parallax = 0.3 },
-		-- width = "100%",
-		-- height = "100%",
-	},
-	{
-		source = {
-			Color = "#282c35",
-		},
-		width = "100%",
-		height = "100%",
-		-- opacity = 0.55,
-		opacity = 0.75,
-		-- opacity = 1,
-	},
+  {
+    source = {
+      File = "/Users/" .. os.getenv("USER") .. "/Pictures/ravens.jpg",
+    },
+    hsb = {
+      hue = 1.0,
+      saturation = 1.02,
+      brightness = 0.25,
+    },
+  },
+  {
+    source = {
+      Color = "#282c35",
+    },
+    width = "100%",
+    height = "100%",
+    opacity = 0.75,
+  },
 }
--- config.window_background_opacity = 0.3
--- config.macos_window_background_blur = 20
+
+-- Font resizing logic (this will be triggered on window resize)
 config.keys = {
-	{ key = "Enter", mods = "CTRL", action = wezterm.action({ SendString = "\x1b[13;5u" }) },
-	{ key = "Enter", mods = "SHIFT", action = wezterm.action({ SendString = "\x1b[13;2u" }) },
+  { key = "Enter", mods = "CTRL", action = wezterm.action({ SendString = "\x1b[13;5u" }) },
+  { key = "Enter", mods = "SHIFT", action = wezterm.action({ SendString = "\x1b[13;2u" }) },
 }
--- from: https://akos.ma/blog/adopting-wezterm/
+
 config.hyperlink_rules = {
-	-- Matches: a URL in parens: (URL)
-	{
-		regex = "\\((\\w+://\\S+)\\)",
-		format = "$1",
-		highlight = 1,
-	},
-	-- Matches: a URL in brackets: [URL]
-	{
-		regex = "\\[(\\w+://\\S+)\\]",
-		format = "$1",
-		highlight = 1,
-	},
-	-- Matches: a URL in curly braces: {URL}
-	{
-		regex = "\\{(\\w+://\\S+)\\}",
-		format = "$1",
-		highlight = 1,
-	},
-	-- Matches: a URL in angle brackets: <URL>
-	{
-		regex = "<(\\w+://\\S+)>",
-		format = "$1",
-		highlight = 1,
-	},
-	-- Then handle URLs not wrapped in brackets
-	{
-		regex = "[^(]\\b(\\w+://\\S+[)/a-zA-Z0-9-]+)",
-		format = "$1",
-		highlight = 1,
-	},
+  -- URL matching rules
+  {
+    regex = "\\((\\w+://\\S+)\\)",
+    format = "$1",
+    highlight = 1,
+  },
+  {
+    regex = "\\[(\\w+://\\S+)\\]",
+    format = "$1",
+    highlight = 1,
+  },
+  {
+    regex = "\\{(\\w+://\\S+)\\}",
+    format = "$1",
+    highlight = 1,
+  },
+  {
+    regex = "<(\\w+://\\S+)>",
+    format = "$1",
+    highlight = 1,
+  },
+  {
+    regex = "[^(]\\b(\\w+://\\S+[)/a-zA-Z0-9-]+)",
+    format = "$1",
+    highlight = 1,
+  },
 }
+
 return config

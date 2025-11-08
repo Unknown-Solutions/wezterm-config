@@ -1,4 +1,3 @@
-
 local wezterm = require("wezterm")
 local mux = wezterm.mux
 
@@ -7,11 +6,7 @@ wezterm.on("gui-startup", function()
   window:gui_window():maximize()
 end)
 
--- wezterm.on("window-resized", function(window, pane)
--- 	readjust_font_size(window, pane)
--- end)
-
--- Readjust font size on window resize to get rid of the padding at the bottom
+-- Font size readjustment function based on window resize
 function readjust_font_size(window, pane)
   local window_dims = window:get_dimensions()
   local pane_dims = pane:get_dimensions()
@@ -31,7 +26,6 @@ function readjust_font_size(window, pane)
 
   -- Loop to adjust font size until the difference is within tolerance or max iterations reached
   while current_diff > tolerance and iteration_count < max_iterations do
-    -- wezterm.log_info(window_dims, pane_dims, config_overrides.font_size)
     wezterm.log_info(
       string.format(
         "Win Height: %d, Pane Height: %d, Height Diff: %d, Curr Font Size: %.2f, Cells: %d, Cell Height: %.2f",
@@ -69,3 +63,8 @@ function readjust_font_size(window, pane)
     window:set_config_overrides(config_overrides)
   end
 end
+
+-- Uncomment if you still want font resizing on window resizing
+wezterm.on("window-resized", function(window, pane)
+  readjust_font_size(window, pane)
+end)
